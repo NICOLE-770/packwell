@@ -1,0 +1,128 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "Spectral", serif;
+  line-height: 1.6;
+  font-weight: 400;
+  color: #3a2e22;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: #f4ece0;
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(58, 46, 34, 0.05) 0, transparent 38%),
+    radial-gradient(circle at 88% 72%, rgba(200, 100, 58, 0.06) 0, transparent 42%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.04'/%3E%3C/feComponentTransfer%3E%3CfeComposite in2='SourceGraphic' operator='in'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-attachment: fixed;
+}
+
+@layer components {
+  .tag-border {
+    @apply border border-dashed border-sand-300;
+  }
+
+  .paper-card {
+    @apply bg-sand-50 tag-border rounded-tag shadow-paper;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-tag px-4 py-2 text-sm font-medium transition-all duration-150 select-none disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-primary {
+    @apply btn bg-moss text-sand-50 hover:bg-moss-light active:translate-y-px;
+  }
+
+  .btn-secondary {
+    @apply btn border border-ochre text-ochre-deep hover:bg-ochre/10 active:translate-y-px;
+  }
+
+  .btn-ghost {
+    @apply btn text-ink-soft hover:bg-sand-200/60;
+  }
+
+  .btn-danger {
+    @apply btn border border-stamp text-stamp hover:bg-stamp/10 active:translate-y-px;
+  }
+
+  .icon-btn {
+    @apply inline-flex h-9 w-9 items-center justify-center rounded-tag text-ink-soft transition-colors hover:bg-sand-200/70 hover:text-ink;
+  }
+
+  .field-input {
+    @apply w-full rounded-tag border border-sand-300 bg-sand-50 px-3 py-2 text-sm text-ink placeholder:text-ink-soft/60 focus:border-moss focus:outline-none focus:ring-2 focus:ring-moss/20;
+  }
+
+  .stamp-tag {
+    @apply inline-flex items-center gap-1 rounded-full border border-stamp/60 px-2 py-0.5 font-mono text-[11px] uppercase tracking-wider text-stamp;
+  }
+}
+
+/* 复选框样式 */
+.pw-check {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid #6b5a47;
+  border-radius: 6px;
+  background: #fbf6ee;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.pw-check:hover {
+  border-color: #2f4a3c;
+}
+
+.pw-check:checked {
+  background: #2f4a3c;
+  border-color: #2f4a3c;
+}
+
+.pw-check:checked::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 6px;
+  height: 12px;
+  border: solid #fbf6ee;
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg);
+}
+
+/* 滚动条 */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #d9cdb8;
+  border-radius: 8px;
+  border: 2px solid #f4ece0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #c8b89c;
+}
