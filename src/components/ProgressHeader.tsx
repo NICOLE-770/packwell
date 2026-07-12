@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Check, Pencil } from "lucide-react";
+import { Check, Pencil, Share2 } from "lucide-react";
 import { usePackStore } from "@/store/usePackStore";
 import { computeProgress } from "@/lib/progress";
 import type { Trip } from "@/types";
@@ -39,11 +39,11 @@ export function ProgressHeader({ trip, onOpenShare }: ProgressHeaderProps) {
     <header className="paper-card relative overflow-hidden p-5 sm:p-6">
       {/* 装饰：邮戳 */}
       <div className="pointer-events-none absolute -right-6 -top-6 select-none">
-        <div className="rounded-full border-2 border-dashed border-ochre/30 px-3 py-3 text-center opacity-60">
-          <div className="font-mono text-[9px] uppercase tracking-widest text-ochre-deep">
+        <div className="rounded-full border-2 border-dashed border-lavender/40 px-3 py-3 text-center opacity-70">
+          <div className="font-mono text-[9px] uppercase tracking-widest text-lavender-deep">
             Packwell
           </div>
-          <div className="font-display text-base leading-none text-ochre-deep">
+          <div className="font-display text-base leading-none text-lavender-deep">
             ✈
           </div>
         </div>
@@ -72,11 +72,11 @@ export function ProgressHeader({ trip, onOpenShare }: ProgressHeaderProps) {
                 {trip.title || "未命名旅行"}
               </h1>
               <button
-                className="icon-btn h-7 w-7"
+                className="flex h-9 w-9 items-center justify-center rounded-tag text-ink-soft transition-colors hover:bg-sand-200/70 hover:text-ink"
                 onClick={() => setEditing(true)}
                 aria-label="编辑标题"
               >
-                <Pencil size={13} />
+                <Pencil size={16} />
               </button>
             </div>
           )}
@@ -97,13 +97,13 @@ export function ProgressHeader({ trip, onOpenShare }: ProgressHeaderProps) {
           </div>
           {allDone && (
             <span className="stamp-tag animate-stamp-press">
-              <Check size={11} /> 全部就绪
+              <Check size={13} /> 全部就绪
             </span>
           )}
         </div>
-        <div className="mt-2 h-2 overflow-hidden rounded-full bg-sand-300/60">
+        <div className="mt-2 h-2.5 overflow-hidden rounded-full bg-sand-300/60">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-moss to-ochre transition-all duration-500"
+            className="h-full rounded-full bg-gradient-to-r from-moss via-ochre to-teal transition-all duration-500"
             style={{ width: `${progress.percent}%` }}
           />
         </div>
@@ -112,7 +112,7 @@ export function ProgressHeader({ trip, onOpenShare }: ProgressHeaderProps) {
       {/* 行动按钮 */}
       <div className="mt-5 flex flex-wrap gap-2">
         <button className="btn-primary" onClick={onOpenShare}>
-          共享给联系人
+          <Share2 size={16} /> 共享给联系人
         </button>
       </div>
     </header>

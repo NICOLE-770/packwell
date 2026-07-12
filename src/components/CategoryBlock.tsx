@@ -34,10 +34,10 @@ export function CategoryBlock({ category, items, onEditItem }: CategoryBlockProp
     <section className="paper-card overflow-hidden animate-fade-in">
       <button
         onClick={() => setCollapsed((v) => !v)}
-        className="flex w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-sand-100/60"
+        className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors hover:bg-sand-100/60"
       >
-        <span className="flex h-9 w-9 items-center justify-center rounded-tag bg-moss/10 text-moss">
-          <Icon size={17} />
+        <span className="flex h-11 w-11 items-center justify-center rounded-tag bg-teal/15 text-teal-deep">
+          <Icon size={24} />
         </span>
         <div className="flex-1 min-w-0">
           <h3 className="font-display text-base text-ink leading-tight">
@@ -50,7 +50,7 @@ export function CategoryBlock({ category, items, onEditItem }: CategoryBlockProp
         <div className="hidden sm:flex items-center gap-2">
           <div className="h-1.5 w-24 overflow-hidden rounded-full bg-sand-300/60">
             <div
-              className="h-full rounded-full bg-ochre transition-all duration-500"
+              className="h-full rounded-full bg-moss transition-all duration-500"
               style={{ width: `${progress.percent}%` }}
             />
           </div>
@@ -59,9 +59,9 @@ export function CategoryBlock({ category, items, onEditItem }: CategoryBlockProp
           </span>
         </div>
         {collapsed ? (
-          <ChevronRight size={16} className="text-ink-soft" />
+          <ChevronRight size={20} className="text-ink-soft" />
         ) : (
-          <ChevronDown size={16} className="text-ink-soft" />
+          <ChevronDown size={20} className="text-ink-soft" />
         )}
       </button>
 
@@ -97,7 +97,7 @@ interface ItemRowProps {
 
 function ItemRow({ item, onToggle, onEdit, onRemove }: ItemRowProps) {
   return (
-    <li className="group flex items-center gap-3 px-4 py-2.5 transition-colors hover:bg-sand-100/50">
+    <li className="group flex items-center gap-3 px-4 py-3 transition-colors hover:bg-sand-100/50">
       <input
         type="checkbox"
         className="pw-check"
@@ -111,7 +111,7 @@ function ItemRow({ item, onToggle, onEdit, onRemove }: ItemRowProps) {
             className={cn(
               "text-sm transition-colors",
               item.packed
-                ? "text-ink-soft line-through decoration-ochre/60"
+                ? "text-ink-soft line-through decoration-moss/60"
                 : "text-ink"
             )}
           >
@@ -129,20 +129,20 @@ function ItemRow({ item, onToggle, onEdit, onRemove }: ItemRowProps) {
           </p>
         )}
       </div>
-      <div className="flex items-center opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100">
+      <div className="flex items-center gap-2">
         <button
-          className="icon-btn h-8 w-8"
+          className="flex h-10 w-10 items-center justify-center rounded-tag text-ink-soft transition-colors hover:bg-teal/15 hover:text-teal-deep"
           onClick={onEdit}
           aria-label="编辑"
         >
-          <Pencil size={13} />
+          <Pencil size={18} />
         </button>
         <button
-          className="icon-btn h-8 w-8 hover:text-stamp"
+          className="flex h-10 w-10 items-center justify-center rounded-tag text-ink-soft transition-colors hover:bg-stamp/10 hover:text-stamp"
           onClick={onRemove}
           aria-label="删除"
         >
-          <Trash2 size={13} />
+          <Trash2 size={18} />
         </button>
       </div>
     </li>

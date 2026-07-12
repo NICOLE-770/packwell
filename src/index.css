@@ -8,7 +8,7 @@
   font-family: "Spectral", serif;
   line-height: 1.6;
   font-weight: 400;
-  color: #3a2e22;
+  color: #2D3047;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -20,15 +20,19 @@ html,
 body,
 #root {
   min-height: 100%;
+  /* 禁止缩放 */
+  touch-action: pan-x pan-y;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
   margin: 0;
-  background-color: #f4ece0;
+  background-color: #FFF8F5;
   background-image:
-    radial-gradient(circle at 12% 18%, rgba(58, 46, 34, 0.05) 0, transparent 38%),
-    radial-gradient(circle at 88% 72%, rgba(200, 100, 58, 0.06) 0, transparent 42%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.04'/%3E%3C/feComponentTransfer%3E%3CfeComposite in2='SourceGraphic' operator='in'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    radial-gradient(circle at 12% 18%, rgba(255, 107, 107, 0.08) 0, transparent 38%),
+    radial-gradient(circle at 88% 72%, rgba(78, 205, 196, 0.08) 0, transparent 42%),
+    radial-gradient(circle at 50% 50%, rgba(255, 230, 109, 0.05) 0, transparent 50%);
   background-attachment: fixed;
 }
 
@@ -42,15 +46,15 @@ body {
   }
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-tag px-4 py-2 text-sm font-medium transition-all duration-150 select-none disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply inline-flex items-center justify-center gap-2 rounded-tag px-4 py-2.5 text-sm font-medium transition-all duration-150 select-none disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .btn-primary {
-    @apply btn bg-moss text-sand-50 hover:bg-moss-light active:translate-y-px;
+    @apply btn bg-moss text-white hover:bg-moss-light active:translate-y-px;
   }
 
   .btn-secondary {
-    @apply btn border border-ochre text-ochre-deep hover:bg-ochre/10 active:translate-y-px;
+    @apply btn border border-teal text-teal-deep hover:bg-teal/10 active:translate-y-px;
   }
 
   .btn-ghost {
@@ -62,11 +66,11 @@ body {
   }
 
   .icon-btn {
-    @apply inline-flex h-9 w-9 items-center justify-center rounded-tag text-ink-soft transition-colors hover:bg-sand-200/70 hover:text-ink;
+    @apply inline-flex h-10 w-10 items-center justify-center rounded-tag text-ink-soft transition-colors hover:bg-sand-200/70 hover:text-ink;
   }
 
   .field-input {
-    @apply w-full rounded-tag border border-sand-300 bg-sand-50 px-3 py-2 text-sm text-ink placeholder:text-ink-soft/60 focus:border-moss focus:outline-none focus:ring-2 focus:ring-moss/20;
+    @apply w-full rounded-tag border border-sand-300 bg-sand-50 px-3 py-2.5 text-sm text-ink placeholder:text-ink-soft/60 focus:border-moss focus:outline-none focus:ring-2 focus:ring-moss/20;
   }
 
   .stamp-tag {
@@ -78,11 +82,11 @@ body {
 .pw-check {
   appearance: none;
   -webkit-appearance: none;
-  width: 22px;
-  height: 22px;
-  border: 1.5px solid #6b5a47;
-  border-radius: 6px;
-  background: #fbf6ee;
+  width: 24px;
+  height: 24px;
+  border: 2px solid #6B6D8A;
+  border-radius: 8px;
+  background: #FFF8F5;
   cursor: pointer;
   position: relative;
   transition: all 0.15s ease;
@@ -90,22 +94,22 @@ body {
 }
 
 .pw-check:hover {
-  border-color: #2f4a3c;
+  border-color: #FF6B6B;
 }
 
 .pw-check:checked {
-  background: #2f4a3c;
-  border-color: #2f4a3c;
+  background: #FF6B6B;
+  border-color: #FF6B6B;
 }
 
 .pw-check:checked::after {
   content: "";
   position: absolute;
-  left: 6px;
-  top: 2px;
+  left: 7px;
+  top: 3px;
   width: 6px;
   height: 12px;
-  border: solid #fbf6ee;
+  border: solid #FFF8F5;
   border-width: 0 2.5px 2.5px 0;
   transform: rotate(45deg);
 }
@@ -119,10 +123,10 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #d9cdb8;
+  background: #FFD0BC;
   border-radius: 8px;
-  border: 2px solid #f4ece0;
+  border: 2px solid #FFF8F5;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #c8b89c;
+  background: #FFB89C;
 }

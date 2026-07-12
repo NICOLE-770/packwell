@@ -10,26 +10,41 @@ export default {
     extend: {
       colors: {
         sand: {
-          50: "#FBF6EE",
-          100: "#F4ECE0",
-          200: "#EBDFCB",
-          300: "#D9CDB8",
+          50: "#FFF8F5",
+          100: "#FFF0EA",
+          200: "#FFE4D6",
+          300: "#FFD0BC",
         },
         ink: {
-          DEFAULT: "#3A2E22",
-          soft: "#6B5A47",
+          DEFAULT: "#2D3047",
+          soft: "#6B6D8A",
         },
         moss: {
-          DEFAULT: "#2F4A3C",
-          light: "#3E5E4D",
-          deep: "#243A2F",
+          DEFAULT: "#FF6B6B",
+          light: "#FF8787",
+          deep: "#E85555",
         },
         ochre: {
-          DEFAULT: "#C8643A",
-          light: "#D87E50",
-          deep: "#A24E29",
+          DEFAULT: "#FFA952",
+          light: "#FFBE7A",
+          deep: "#E88C2E",
         },
-        stamp: "#A23B2A",
+        teal: {
+          DEFAULT: "#4ECDC4",
+          light: "#6FD8D0",
+          deep: "#3AB8B0",
+        },
+        sun: {
+          DEFAULT: "#FFE66D",
+          light: "#FFEE8A",
+          deep: "#F0D440",
+        },
+        lavender: {
+          DEFAULT: "#C490E4",
+          light: "#D4A5ED",
+          deep: "#A66FD0",
+        },
+        stamp: "#E85555",
       },
       fontFamily: {
         display: ['"Fraunces"', "serif"],
@@ -37,17 +52,17 @@ export default {
         mono: ['"JetBrains Mono"', "monospace"],
       },
       borderRadius: {
-        tag: "8px",
+        tag: "12px",
       },
       boxShadow: {
-        paper: "0 1px 0 rgba(58,46,34,0.06), 0 8px 24px -16px rgba(58,46,34,0.25)",
-        stamp: "0 2px 0 rgba(162,59,42,0.18)",
+        paper: "0 2px 0 rgba(45,48,71,0.04), 0 8px 28px -16px rgba(45,48,71,0.2)",
+        stamp: "0 2px 0 rgba(255,107,107,0.18)",
       },
       backgroundImage: {
         "paper-grain":
-          "radial-gradient(circle at 20% 20%, rgba(58,46,34,0.04) 0, transparent 40%), radial-gradient(circle at 80% 60%, rgba(200,100,58,0.05) 0, transparent 45%)",
+          "radial-gradient(circle at 20% 20%, rgba(255,107,107,0.08) 0, transparent 40%), radial-gradient(circle at 80% 60%, rgba(78,205,196,0.08) 0, transparent 45%)",
         "dashed-line":
-          "repeating-linear-gradient(to right, #D9CDB8 0 6px, transparent 6px 12px)",
+          "repeating-linear-gradient(to right, #FFD0BC 0 6px, transparent 6px 12px)",
       },
       keyframes: {
         "fade-in": {

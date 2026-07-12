@@ -31,12 +31,12 @@ export default defineConfig({
         short_name: "行囊",
         description: "旅行物品清单管理：分类整理、快速检索、共享给联系人",
         lang: "zh-CN",
-        start_url: "/",
-        scope: "/",
+        start_url: "./",
+        scope: "./",
         display: "standalone",
         orientation: "portrait",
-        background_color: "#F4ECE0",
-        theme_color: "#2F4A3C",
+        background_color: "#FFF8F5",
+        theme_color: "#FF6B6B",
         categories: ["travel", "productivity", "utilities"],
         icons: [
           {
