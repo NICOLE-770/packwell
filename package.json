@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "check": "tsc -b --noEmit",
-    "icons": "node scripts/generate-icons.mjs"
+    "icons": "node scripts/generate-icons.mjs",
+    "deploy": "bash scripts/deploy.sh"
   },
   "dependencies": {
     "clsx": "^2.1.1",
