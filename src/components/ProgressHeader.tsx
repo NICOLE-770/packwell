@@ -1,15 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { Check, Pencil, Share2 } from "lucide-react";
+import { Check, Pencil } from "lucide-react";
 import { usePackStore } from "@/store/usePackStore";
 import { computeProgress } from "@/lib/progress";
 import type { Trip } from "@/types";
 
 interface ProgressHeaderProps {
   trip: Trip;
-  onOpenShare: () => void;
 }
 
-export function ProgressHeader({ trip, onOpenShare }: ProgressHeaderProps) {
+export function ProgressHeader({ trip }: ProgressHeaderProps) {
   const setTitle = usePackStore((s) => s.setTitle);
   const progress = computeProgress(trip.items);
 
@@ -37,7 +36,6 @@ export function ProgressHeader({ trip, onOpenShare }: ProgressHeaderProps) {
 
   return (
     <header className="paper-card relative overflow-hidden p-5 sm:p-6">
-      {/* 装饰：邮戳 */}
       <div className="pointer-events-none absolute -right-6 -top-6 select-none">
         <div className="rounded-full border-2 border-dashed border-lavender/40 px-3 py-3 text-center opacity-70">
           <div className="font-mono text-[9px] uppercase tracking-widest text-lavender-deep">
@@ -83,7 +81,6 @@ export function ProgressHeader({ trip, onOpenShare }: ProgressHeaderProps) {
         </div>
       </div>
 
-      {/* 进度 */}
       <div className="mt-5">
         <div className="flex items-end justify-between">
           <div>
@@ -107,13 +104,6 @@ export function ProgressHeader({ trip, onOpenShare }: ProgressHeaderProps) {
             style={{ width: `${progress.percent}%` }}
           />
         </div>
-      </div>
-
-      {/* 行动按钮 */}
-      <div className="mt-5 flex flex-wrap gap-2">
-        <button className="btn-primary" onClick={onOpenShare}>
-          <Share2 size={16} /> 共享给联系人
-        </button>
       </div>
     </header>
   );

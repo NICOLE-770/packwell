@@ -95,6 +95,8 @@ interface PackState {
   trips: Trip[];
   currentTripId: string | null;
   initialized: boolean;
+  personPresets: string[];
+  locationPresets: string[];
 
   // 当前清单快捷访问
   currentTrip: () => Trip | null;
@@ -110,10 +112,17 @@ interface PackState {
   importFromPayload: (data: SharedPayload) => string;
   importFromBackup: (data: { title: string; categories: Category[]; items: Item[] }) => string;
 
+  // 预设管理
+  addPersonPreset: (name: string) => void;
+  removePersonPreset: (name: string) => void;
+  addLocationPreset: (name: string) => void;
+  removeLocationPreset: (name: string) => void;
+
   // 当前清单内操作
   setTitle: (title: string) => void;
   clearItems: () => void;
   addItem: (data: Omit<Item, "id" | "order" | "packed">) => void;
+  addItems: (items: Array<Omit<Item, "id" | "order" | "packed">>) => void;
   updateItem: (id: string, patch: Partial<Omit<Item, "id">>) => void;
   removeItem: (id: string) => void;
   togglePacked: (id: string) => void;
@@ -129,6 +138,8 @@ export const usePackStore = create<PackState>()(
       trips: [],
       currentTripId: null,
       initialized: false,
+      personPresets: ["爸爸", "妈妈", "宝贝"],
+      locationPresets: ["随身背包", "行李箱", "手提袋"],
 
       currentTrip: () => {
         const s = get();
@@ -252,6 +263,24 @@ export const usePackStore = create<PackState>()(
           return { trips };
         }),
 
+      addItems: (items) =>
+        set((s) => {
+          const idx = s.trips.findIndex((t) => t.id === s.currentTripId);
+          if (idx === -1) return s;
+          const trip = s.trips[idx];
+          const newItems: Item[] = [];
+          items.forEach((data) => {
+            const order =
+              trip.items
+                .filter((i) => i.categoryId === data.categoryId)
+                .reduce((m, i) => Math.max(m, i.order), -1) + newItems.filter((i) => i.categoryId === data.categoryId).length + 1;
+            newItems.push({ id: uid("i"), order, packed: false, ...data });
+          });
+          const trips = [...s.trips];
+          trips[idx] = touch({ ...trip, items: [...trip.items, ...newItems] });
+          return { trips };
+        }),
+
       updateItem: (id, patch) =>
         set((s) => {
           const idx = s.trips.findIndex((t) => t.id === s.currentTripId);
@@ -349,6 +378,28 @@ export const usePackStore = create<PackState>()(
           trips[idx] = touch({ ...trip, categories: reindexed });
           return { trips };
         }),
+
+      // ---- 预设管理 ----
+      addPersonPreset: (name) =>
+        set((s) => {
+          const trimmed = name.trim();
+          if (!trimmed || s.personPresets.includes(trimmed)) return s;
+          return { personPresets: [...s.personPresets, trimmed] };
+        }),
+      removePersonPreset: (name) =>
+        set((s) => ({
+          personPresets: s.personPresets.filter((p) => p !== name),
+        })),
+      addLocationPreset: (name) =>
+        set((s) => {
+          const trimmed = name.trim();
+          if (!trimmed || s.locationPresets.includes(trimmed)) return s;
+          return { locationPresets: [...s.locationPresets, trimmed] };
+        }),
+      removeLocationPreset: (name) =>
+        set((s) => ({
+          locationPresets: s.locationPresets.filter((l) => l !== name),
+        })),
     }),
     {
       name: STORAGE_KEY,
@@ -356,6 +407,8 @@ export const usePackStore = create<PackState>()(
         trips: s.trips,
         currentTripId: s.currentTripId,
         initialized: s.initialized,
+        personPresets: s.personPresets,
+        locationPresets: s.locationPresets,
       }),
     }
   )

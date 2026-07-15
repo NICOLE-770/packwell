@@ -1,46 +1,95 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { AlertTriangle, ArrowLeft, Compass, Download, Lock } from "lucide-react";
 import { decodeShare } from "@/lib/share";
 import { computeProgress } from "@/lib/progress";
 import { getCategoryIcon } from "@/lib/icons";
 import { usePackStore } from "@/store/usePackStore";
+import { MergePreviewModal } from "@/components/MergePreviewModal";
+import type { Item, Category } from "@/types";
 
 export default function Share() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const payload = useMemo(() => decodeShare(params.get("d")), [params]);
   const importFromPayload = usePackStore((s) => s.importFromPayload);
-
-  if (!payload) {
-    return (
-      <div className="min-h-screen flex items-center justify-center p-6">
-        <div className="paper-card max-w-md p-8 text-center">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border-2 border-dashed border-stamp/40 text-stamp">
-            <AlertTriangle size={26} />
-          </div>
-          <h1 className="font-display text-xl text-ink">链接无效</h1>
-          <p className="mt-2 text-sm text-ink-soft">
-            这份共享清单链接已损坏或缺失数据，请向分享者重新获取。
-          </p>
-          <Link to="/" className="btn-primary mt-5 inline-flex">
-            <ArrowLeft size={15} /> 返回我的清单
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
-  const progress = computeProgress(payload.items);
-  const sortedCats = [...payload.categories].sort((a, b) => a.order - b.order);
-  const exportedAt = new Date(payload.exportedAt);
+  const currentTrip = usePackStore((s) => s.currentTrip());
+  const [mergePreviewOpen, setMergePreviewOpen] = useState(false);
 
   const handleImport = () => {
-    importFromPayload(payload);
+    if (currentTrip && currentTrip.items.length > 0) {
+      setMergePreviewOpen(true);
+    } else {
+      importFromPayload(payload);
+      navigate("/");
+    }
+  };
+
+  const handleMerge = (items: Item[], categories: Category[]) => {
+    const store = usePackStore.getState();
+    const tripId = store.currentTripId;
+    const trips = store.trips.map((t) => {
+      if (t.id !== tripId) return t;
+      return {
+        ...t,
+        title: payload.title,
+        categories,
+        items: items.map((item, i) => ({ ...item, order: i })),
+        updatedAt: Date.now(),
+      };
+    });
+    usePackStore.setState({ trips });
+    navigate("/");
+  };
+
+  const handleReplace = (items: Item[], categories: Category[]) => {
+    const store = usePackStore.getState();
+    const tripId = store.currentTripId;
+    const trips = store.trips.map((t) => {
+      if (t.id !== tripId) return t;
+      return {
+        ...t,
+        title: payload.title,
+        categories,
+        items: items.map((item, i) => ({ ...item, order: i })),
+        updatedAt: Date.now(),
+      };
+    });
+    usePackStore.setState({ trips });
     navigate("/");
   };
 
   return (
+    <>
+      {payload && currentTrip && currentTrip.items.length > 0 && (
+        <MergePreviewModal
+          open={mergePreviewOpen}
+          onClose={() => { setMergePreviewOpen(false); navigate("/"); }}
+          localItems={currentTrip.items}
+          remoteItems={payload.items}
+          localCategories={currentTrip.categories}
+          remoteCategories={payload.categories}
+          remoteTitle={payload.title}
+          onMerge={handleMerge}
+          onReplace={handleReplace}
+        />
+      )}
+      {!payload ? (
+        <div className="min-h-screen flex items-center justify-center p-6">
+          <div className="paper-card max-w-md p-8 text-center">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border-2 border-dashed border-stamp/40 text-stamp">
+              <AlertTriangle size={26} />
+            </div>
+            <h1 className="font-display text-xl text-ink">链接无效</h1>
+            <p className="mt-2 text-sm text-ink-soft">
+              这份共享清单链接已损坏或缺失数据，请向分享者重新获取。
+            </p>
+            <Link to="/" className="btn-primary mt-5 inline-flex">
+              <ArrowLeft size={15} /> 返回我的清单
+            </Link>
+          </div>
+        </div>
+      ) : (
     <div className="min-h-screen pb-16">
       {/* 顶栏 */}
       <div className="sticky top-0 z-30 border-b border-dashed border-sand-300/70 bg-sand-100/85 backdrop-blur">
@@ -79,22 +128,22 @@ export default function Share() {
           <div className="mt-4">
             <div className="flex items-end justify-between">
               <span className="font-mono text-3xl text-moss tabular-nums">
-                {progress.percent}
+                {computeProgress(payload.items).percent}
               </span>
               <span className="font-mono text-sm text-ink-soft">%</span>
               <span className="ml-2 text-xs text-ink-soft">
-                {progress.packed} / {progress.total} 件已打包
+                {computeProgress(payload.items).packed} / {computeProgress(payload.items).total} 件已打包
               </span>
             </div>
             <div className="mt-2 h-2 overflow-hidden rounded-full bg-sand-300/60">
               <div
                 className="h-full rounded-full bg-gradient-to-r from-moss to-ochre transition-all duration-500"
-                style={{ width: `${progress.percent}%` }}
+                style={{ width: `${computeProgress(payload.items).percent}%` }}
               />
             </div>
           </div>
           <p className="mt-3 font-mono text-[10px] text-ink-soft">
-            导出于 {exportedAt.toLocaleString("zh-CN")}
+            导出于 {new Date(payload.exportedAt).toLocaleString("zh-CN")}
           </p>
         </header>
 
@@ -108,7 +157,7 @@ export default function Share() {
 
         {/* 分类列表（只读） */}
         <div className="space-y-3">
-          {sortedCats.map((cat) => {
+          {[...payload.categories].sort((a, b) => a.order - b.order).map((cat) => {
             const Icon = getCategoryIcon(cat.icon);
             const items = payload.items
               .filter((i) => i.categoryId === cat.id)
@@ -199,5 +248,7 @@ export default function Share() {
         </div>
       </main>
     </div>
+      )}
+    </>
   );
 }

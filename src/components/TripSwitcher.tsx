@@ -124,22 +124,6 @@ export function TripSwitcher({ open, onClose }: TripSwitcherProps) {
           <button className="btn-primary text-xs" onClick={handleCreate}>
             <Plus size={14} /> 新建清单
           </button>
-          <button className="btn-secondary text-xs" onClick={handleExample}>
-            <Sparkles size={14} /> 示例清单
-          </button>
-          <button
-            className="btn-ghost text-xs"
-            onClick={() => fileInputRef.current?.click()}
-          >
-            <Upload size={14} /> 导入备份
-          </button>
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".json"
-            className="hidden"
-            onChange={handleImportFile}
-          />
         </div>
 
         {/* 清单列表 */}

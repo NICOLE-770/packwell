@@ -35,8 +35,8 @@ export default defineConfig({
         scope: "./",
         display: "standalone",
         orientation: "portrait",
-        background_color: "#FFF8F5",
-        theme_color: "#FF6B6B",
+        background_color: "#F9F7F3",
+        theme_color: "#96BE96",
         categories: ["travel", "productivity", "utilities"],
         icons: [
           {
@@ -60,6 +60,8 @@ export default defineConfig({
         ],
       },
       workbox: {
+        skipWaiting: true,
+        clientsClaim: true,
         // 预缓存所有构建产物，离线可用
         globPatterns: ["**/*.{js,css,html,svg,png,ico,woff,woff2}"],
         // 字体走 Google Fonts CDN，用 runtime 缓存

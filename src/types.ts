@@ -11,6 +11,7 @@ export interface Item {
   name: string;
   quantity: number;
   note?: string;
+  location?: string; // 存放位置
   packed: boolean;
   order: number;
 }
@@ -44,6 +45,7 @@ export interface BackupFile {
 
 export type DraftItem = Omit<Item, "id" | "order" | "packed"> & {
   id?: string;
+  location?: string;
 };
 
 export const CATEGORY_ICONS = [

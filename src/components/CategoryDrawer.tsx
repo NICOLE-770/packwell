@@ -211,7 +211,7 @@ function IconPicker({
       <p className="mb-1.5 text-[11px] font-medium uppercase tracking-wide text-ink-soft">
         图标
       </p>
-      <div className="flex flex-wrap gap-1.5">
+      <div className="flex flex-wrap gap-2">
         {CATEGORY_ICON_OPTIONS.map((name) => {
           const Icon = getCategoryIcon(name);
           const active = name === value;
@@ -221,14 +221,14 @@ function IconPicker({
               type="button"
               onClick={() => onChange(name)}
               className={
-                "flex h-8 w-8 items-center justify-center rounded-tag border transition-colors " +
+                "flex h-10 w-10 items-center justify-center rounded-tag border transition-colors " +
                 (active
                   ? "border-moss bg-moss text-sand-50"
                   : "border-sand-300 bg-sand-50 text-ink-soft hover:bg-sand-200/70")
               }
               title={name}
             >
-              <Icon size={15} />
+              <Icon size={20} />
             </button>
           );
         })}
